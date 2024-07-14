@@ -56,7 +56,7 @@ function resetTimer() {
 
 function updateFinalResult(finalTime) {
     console.log('Updating final result:', finalTime); // Debug log
-    finalResultDisplayArea.textContent = 'Your winning time was ' + formatTime(finalTime);
+    finalResultDisplayArea.innerHTML = `<p>Your winning time was <span class="final-time">${formatTime(finalTime)}</span></p>`;
     finalResultDisplayArea.style.visibility = 'block';
 }
 
@@ -137,7 +137,7 @@ function startGame() {
     instructions.innerText = "Match color pairs until all 16 panels are revealed";
     score = 0;
     scoreCounter.innerText = score;
-    finalResultDisplayArea.textContent = ''; // Clear previous game's final time result
+    finalResultDisplayArea.innerHTML = ''; // Clear previous game's final time result
     finalResultDisplayArea.style.visibility = 'none'; // Optionally hide the element
 
     for (let i = 0; i <= 15; i++) {                                         // Loop to create 16 panels
