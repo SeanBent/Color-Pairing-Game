@@ -6,9 +6,11 @@ const scoreCounter = document.getElementById('score-counter');
 const timerCheckbox = document.getElementById('timer-checkbox');
 const timerDisplay = document.getElementById('timer');
 const finalResultDisplayArea = document.getElementById('final-time-display');
+const developmentModeCheckbox = document.getElementById('development-mode-checkbox');
 
 let gameActive = false;
 let gameWon = false;
+let developmentModeActive = false;
 
 const colors = ["red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan",
     "red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan"];
@@ -142,13 +144,21 @@ function startGame() {
 
     for (let i = 0; i <= 15; i++) {                                         // Loop to create 16 panels
         const newPanel = document.createElement('div');                     // Create a new div element for the panel
-        newPanel.className = 'game-panel';                                  // Assign the class 'game-panel' to the new div
-        newPanel.style.background = 'grey';                                 // Set the initial background color of the panel to grey
-        newPanel.setAttribute('data-matched', 'false');                     // Mark panel as not matched
-
+        newPanel.className = 'game-panel';                                  // Assign the class 'game-panel' to the new div                                       
+        newPanel.setAttribute('data-matched', 'false');
         let currentIndex = Math.floor(Math.random() * panelColors.length);  // Get a random index from the panelColors array
-        const truePanelColor = panelColors[currentIndex];                   // Get the color corresponding to the random index
+        const truePanelColor = panelColors[currentIndex];  
 
+        if (developmentModeActive === true) {
+            newPanel.textContent= truePanelColor;
+            newPanel.style.color = truePanelColor;
+        } else {
+            newPanel.style.background = 'grey'; 
+        }
+
+                         // Get the color corresponding to the random index
+
+        
         newPanel.addEventListener('click', () => {
             if (clickable) { // Check if clickable before handling click
                 newPanel.style.background = truePanelColor;
@@ -162,11 +172,7 @@ function startGame() {
 }
 
 function resetGame() {
-    // ... (Logic to reset the game to its initial state)
-}
 
-// Event Listeners
-startStopButton.addEventListener('click', () => {
     score = 0;
     scoreCounter.innerText = score;
     resetTimer();
@@ -189,7 +195,10 @@ startStopButton.addEventListener('click', () => {
         gameActive = true;
         startTimer();                                                        // Set gameActive to true to indicate the game is now active
     }
-});
+}
+
+// Event Listeners
+startStopButton.addEventListener('click', resetGame);
 
 timerCheckbox.addEventListener('change', (e) => {
     if (e.target.checked) {
@@ -198,3 +207,16 @@ timerCheckbox.addEventListener('change', (e) => {
         timerDisplay.style.display = 'none';
     }
 });
+
+developmentModeCheckbox.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        developmentModeActive = true;
+    } else {
+        developmentModeActive = false;
+    }
+    resetGame();
+});
+
+
+
+
