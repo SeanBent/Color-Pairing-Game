@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Color Pairing Game</title>
 </head>
 
@@ -16,15 +17,19 @@
 
         <main>
 
+            <section class="button-area">
+                <button type="button" id="start-stop-button">Start</button>
+            </section>
+
             <section>
                 <div id="final-time-display" aria-live="polite"></div>
                 <div id="game-container"> </div>
                 <h2>Pairs Found: <span id="score-counter">0</span>/8</h2>
             </section>
 
-            <section class="button-area">
-                <button type="button" id="start-stop-button">Start</button>
-            </section>
+            <div id="timer">00:00:00</div>
+
+            
 
             <section id="settings-area">
 
@@ -42,9 +47,18 @@
                     </label>
                     <label for="colorblind-checkbox">Colorblind Mode</label>
                 </div>
-            </section>
 
-            <div id="timer">00:00:00</div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" id="developer-mode-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <label for="developer-mode-checkbox">Developer Mode</label>
+                </div>
+
+
+
+            </section>
 
         </main>
     </div>
