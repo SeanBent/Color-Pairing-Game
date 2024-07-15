@@ -5,12 +5,14 @@ const startStopButton = document.getElementById('start-stop-button');
 const scoreCounter = document.getElementById('score-counter');
 const timerCheckbox = document.getElementById('timer-checkbox');
 const timerDisplay = document.getElementById('timer');
-const finalResultDisplayArea = document.getElementById('final-time-display');
+const finishTimeDisplay = document.getElementById('finish-time-display');
 const developmentModeCheckbox = document.getElementById('development-mode-checkbox');
+const finishTimeCheckbox = document.getElementById('finish-time-checkbox');
 
 let gameActive = false;
 let gameWon = false;
 let developmentModeActive = false;
+finishTimeDisplay.style.visibility = 'hidden';
 
 const colors = ["red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan",
     "red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan"];
@@ -58,8 +60,7 @@ function resetTimer() {
 
 function updateFinalResult(finalTime) {
     console.log('Updating final result:', finalTime); // Debug log
-    finalResultDisplayArea.innerHTML = `<p>Your winning time was <span class="final-time">${formatTime(finalTime)}</span></p>`;
-    finalResultDisplayArea.style.visibility = 'block';
+    finishTimeDisplay.innerHTML = `<p>Finish time: <span class="final-time">${formatTime(finalTime)}</span></p>`;
 }
 
 // Panel Interaction Functions //
@@ -95,8 +96,6 @@ function handleMatch() {
         console.log('Win detected'); // Debug log
         instructions.innerText = 'You won! Click the button below to play again';
         startStopButton.innerText = 'Play Again';
-        // finalResultDisplayArea.innerText = 'Your time was ' + formatTime(elapsedTime);
-        // finalResultDisplayArea.style.visibility = 'block'; ////////
         updateFinalResult(elapsedTime);
         stopTimer();
     }
@@ -139,8 +138,8 @@ function startGame() {
     instructions.innerText = "Match color pairs until all 16 panels are revealed";
     score = 0;
     scoreCounter.innerText = score;
-    finalResultDisplayArea.innerHTML = ''; // Clear previous game's final time result
-    finalResultDisplayArea.style.visibility = 'none'; // Optionally hide the element
+    finishTimeDisplay.innerHTML = `<p>Finish Time: </p>`; // Clear previous game's final time result
+
 
     for (let i = 0; i <= 15; i++) {                                         // Loop to create 16 panels
         const newPanel = document.createElement('div');                     // Create a new div element for the panel
@@ -205,6 +204,17 @@ timerCheckbox.addEventListener('change', (e) => {
         timerDisplay.style.display = 'block';
     } else {
         timerDisplay.style.display = 'none';
+    }
+});
+
+finishTimeCheckbox.addEventListener('change', (e) => {
+    console.log('Finish Time checkbox state changed');
+    if (e.target.checked) {
+        console.log('Finish Time checkbox checked')
+        finishTimeDisplay.style.visibility = 'visible';
+    } else {
+        finishTimeDisplay.style.visibility = 'hidden';
+        console.log('Finish Time checkbox unchecked')
     }
 });
 

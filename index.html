@@ -22,7 +22,7 @@
             </section>
 
             <section>
-                <div id="final-time-display" aria-live="polite"></div>
+                <div id="finish-time-display" aria-live="polite"><p>Finish Time: </p></div>
                 <div id="game-container"> </div>
                 <h2>Pairs Found: <span id="score-counter">0</span>/8</h2>
             </section>
@@ -40,6 +40,15 @@
                     </label>
                     <label for="timer-checkbox">Show Timer</label>
                 </div>
+
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" id="finish-time-checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <label for="finish-time-checkbox">Show Finish Time</label>
+                </div>
+
                 <div>
                     <label class="switch">
                         <input type="checkbox" id="colorblind-checkbox">

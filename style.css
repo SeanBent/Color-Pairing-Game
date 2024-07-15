@@ -23,6 +23,15 @@ body {
     margin: 0 auto;
 }
 
+h1 {
+    margin: 0;
+}
+
+#finish-time-display {
+    visibility: hidden;
+}
+
+
 #game-container {
     background: #beb2b2;
     padding: 5px 5px 5px 5px;
@@ -53,7 +62,7 @@ body {
 }
 
 button {
-    width: 50%;
+    width: 70%;
     height: 60%;
     font-size: large;
     border-radius: 8px;
