@@ -4,15 +4,14 @@ const gameContainer = document.getElementById('game-container');
 const startStopButton = document.getElementById('start-stop-button');
 const scoreCounter = document.getElementById('score-counter');
 const timerCheckbox = document.getElementById('timer-checkbox');
-const timerDisplay = document.getElementById('timer');
-const finishTimeDisplay = document.getElementById('finish-time-display');
+const timerDisplay = document.getElementById('timer-display');
 const developmentModeCheckbox = document.getElementById('development-mode-checkbox');
 const finishTimeCheckbox = document.getElementById('finish-time-checkbox');
 
 let gameActive = false;
 let gameWon = false;
 let developmentModeActive = false;
-finishTimeDisplay.style.visibility = 'hidden';
+// finishTimeDisplay.style.visibility = 'hidden';
 
 const colors = ["red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan",
     "red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan"];
@@ -27,7 +26,7 @@ let score = 0;
 let timerInterval;
 let elapsedTime = 0;
 let timerRunning = false;
-timerDisplay.style.display = 'none';
+timerDisplay.style.visibility = 'hidden';
 
 function formatTime(seconds) {
     const hrs = Math.floor(seconds / 36000);
@@ -60,7 +59,7 @@ function resetTimer() {
 
 function updateFinalResult(finalTime) {
     console.log('Updating final result:', finalTime); // Debug log
-    finishTimeDisplay.innerHTML = `<p>Finish time: <span class="final-time">${formatTime(finalTime)}</span></p>`;
+    timerDisplay.innerHTML = `<p>Finish time: <span class="final-time">${formatTime(finalTime)}</span></p>`;
 }
 
 // Panel Interaction Functions //
@@ -138,7 +137,7 @@ function startGame() {
     instructions.innerText = "Match color pairs until all 16 panels are revealed";
     score = 0;
     scoreCounter.innerText = score;
-    finishTimeDisplay.innerHTML = `<p>Finish Time: </p>`; // Clear previous game's final time result
+    timerDisplay.innerHTML = `<p>Finish Time: </p>`; // Clear previous game's final time result
 
 
     for (let i = 0; i <= 15; i++) {                                         // Loop to create 16 panels
@@ -201,22 +200,13 @@ startStopButton.addEventListener('click', resetGame);
 
 timerCheckbox.addEventListener('change', (e) => {
     if (e.target.checked) {
-        timerDisplay.style.display = 'block';
+        timerDisplay.style.visibility = 'visible';
     } else {
-        timerDisplay.style.display = 'none';
+        timerDisplay.style.visibility  = 'hidden';
     }
 });
 
-finishTimeCheckbox.addEventListener('change', (e) => {
-    console.log('Finish Time checkbox state changed');
-    if (e.target.checked) {
-        console.log('Finish Time checkbox checked')
-        finishTimeDisplay.style.visibility = 'visible';
-    } else {
-        finishTimeDisplay.style.visibility = 'hidden';
-        console.log('Finish Time checkbox unchecked')
-    }
-});
+
 
 developmentModeCheckbox.addEventListener('change', (e) => {
     if (e.target.checked) {
