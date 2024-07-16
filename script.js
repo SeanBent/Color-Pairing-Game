@@ -38,7 +38,7 @@ function formatTime(seconds) {
 
 function updateTimer() {
     elapsedTime++;
-    timerDisplay.textContent = formatTime(elapsedTime);
+    timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`;
 }
 
 function startTimer() {
@@ -54,7 +54,7 @@ function stopTimer() {
 function resetTimer() {
     stopTimer();
     elapsedTime = 0;
-    timerDisplay.textContent = formatTime(elapsedTime);
+    timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`;
 }
 
 function updateFinalResult(finalTime) {
@@ -137,7 +137,7 @@ function startGame() {
     instructions.innerText = "Match color pairs until all 16 panels are revealed";
     score = 0;
     scoreCounter.innerText = score;
-    timerDisplay.innerHTML = `<p>Finish Time: </p>`; // Clear previous game's final time result
+    timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`; // Clear previous game's final time result
 
 
     for (let i = 0; i <= 15; i++) {                                         // Loop to create 16 panels
