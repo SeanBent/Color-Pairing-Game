@@ -70,6 +70,12 @@ button {
 
 
 /* Slider switch */
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 3px;
+}
 .switch {
 position: relative;
 display: inline-block;

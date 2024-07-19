@@ -21,14 +21,17 @@ let firstPanel = null;
 let secondPanel = null;
 let score = 0;
 
+
+
 // Timer Functions //
+
 
 let timerInterval;
 let elapsedTime = 0;
 let timerRunning = false;
 timerDisplay.style.visibility = 'hidden';
 
-function formatTime(seconds) {
+function formatTime(seconds) { // Formats the time from seconds to HH:MM:SS
     const hrs = Math.floor(seconds / 36000);
     const mins = Math.floor((seconds % 3600) / 60)
     const secs = seconds % 60;
@@ -36,33 +39,36 @@ function formatTime(seconds) {
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
-function updateTimer() {
+function updateTimer() { // Updates the timer display with the elapsed time
     elapsedTime++;
     timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`;
 }
 
-function startTimer() {
+function startTimer() { // Starts the timer
     timerRunning = true;
     timerInterval = setInterval(updateTimer, 1000);
-}
+} 
 
-function stopTimer() {
+function stopTimer() { // Stops the timer
     timerRunning = false;
     clearInterval(timerInterval);
 }
 
-function resetTimer() {
+function resetTimer() { // Resets the timer to 00:00:00
     stopTimer();
     elapsedTime = 0;
     timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`;
 }
 
-function updateFinalResult(finalTime) {
+function updateFinalResult(finalTime) { // Updates the timer display with the final result when the game is won
     console.log('Updating final result:', finalTime); // Debug log
     timerDisplay.innerHTML = `<p>Finish time: <span class="final-time">${formatTime(finalTime)}</span></p>`;
-}
+} 
+
+
 
 // Panel Interaction Functions //
+
 
 let clickable = true; // Add a flag to control clicking
 
@@ -80,11 +86,11 @@ function checkMatch() {  //returns true or false if panel colors match
     return firstPanel.style.background === secondPanel.style.background;
 }
 
-function checkWin() {
-    return score === 8; //returns true if max score reached, false if not
+function checkWin() { // Checks if the game is won (all pairs found) 
+    return score === 8; //returns true if max score reached and game is won
 }
 
-function handleMatch() {
+function handleMatch() { // Handles the logic when a mismatch is found
     firstPanel.setAttribute('data-matched', 'true'); // Mark first panel as matched
     secondPanel.setAttribute('data-matched', 'true'); // Mark second panel as matched
     firstPanel = null;
@@ -100,7 +106,7 @@ function handleMatch() {
     }
 }
 
-function handleMismatch() {
+function handleMismatch() { // Handles the logic when a mismatch is found
     clickable = false; // Disable clicking
     setTimeout(() => {                          // Delay for visual feedback
         if (firstPanel !== null) {                // Check if firstPanel is selected
@@ -115,7 +121,7 @@ function handleMismatch() {
     }, 1000);                                    // 1 second delay
 }
 
-function handlePanelClick(panel, color) {
+function handlePanelClick(panel, color) { // Handles the click event on a panel
     if (!clickable) return; // Ignore clicks if not clickable
     if (panel.getAttribute('data-matched') === 'true') return; // Ignore clicks if panel is already matched
 
@@ -132,8 +138,11 @@ function handlePanelClick(panel, color) {
     }
 }
 
+
+
 // Game Logic
-function startGame() {
+
+function startGame() { // Starts the game, initializes panels and timer
     instructions.innerText = "Match color pairs until all 16 panels are revealed";
     score = 0;
     scoreCounter.innerText = score;
@@ -169,7 +178,7 @@ function startGame() {
     }
 }
 
-function resetGame() {
+function resetGame() { // Resets the game, clearing panels and resetting the timer
 
     score = 0;
     scoreCounter.innerText = score;
@@ -195,18 +204,19 @@ function resetGame() {
     }
 }
 
-// Event Listeners
-startStopButton.addEventListener('click', resetGame);
 
-timerCheckbox.addEventListener('change', (e) => {
+/// Event Listeners ///
+
+startStopButton.addEventListener('click', resetGame);
+// Event listener for start/stop button to reset the game
+
+timerCheckbox.addEventListener('change', (e) => { 
     if (e.target.checked) {
         timerDisplay.style.visibility = 'visible';
     } else {
         timerDisplay.style.visibility  = 'hidden';
     }
-});
-
-
+}); // Event listener for timer checkbox to toggle timer visibility
 
 developmentModeCheckbox.addEventListener('change', (e) => {
     if (e.target.checked) {
@@ -215,8 +225,13 @@ developmentModeCheckbox.addEventListener('change', (e) => {
         developmentModeActive = false;
     }
     resetGame();
-});
+}); // Event listener for development mode checkbox to toggle development mode
 
 
 
 
+/* change log
+
+gave each function definition a comment 
+
+*/
