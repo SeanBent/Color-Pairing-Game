@@ -17,17 +17,27 @@
 
         <main>
 
+            <section class="results-area">
+                <div class="results-container">
+
+                    <div class="score-area">
+                        <p>Score: <br><span id="score-counter">0</span>/8</p>
+                    </div>
+
+                    <div id="timer-area">
+                        <!-- <p>Finishing Time: </p> -->
+                        <div id="timer-display"><p>00:00:00</p></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="game-area">
+                <div id="game-container"> </div>
+            </section>
+
             <section class="button-area">
                 <button type="button" id="start-stop-button">Start</button>
-            </section>
-
-            <section class="timer-area">
-                <div id="timer-display"><p>00:00:00</p></div>
-            </section>
-
-            <section>
-                <div id="game-container"> </div>
-                <h2>Pairs Found: <span id="score-counter">0</span>/8</h2>
             </section>
 
             <section id="settings-area">
@@ -37,7 +47,7 @@
                         <input type="checkbox" id="timer-checkbox">
                         <span class="slider round"></span>
                     </label>
-                    <label for="timer-checkbox" class="settings-label">Show Timer</label>
+                    <label for="timer-checkbox" class="settings-label">Hide Timer</label>
                 </div>
 
                 <div class="settings-row">
@@ -48,13 +58,13 @@
                     <label for="colorblind-checkbox" class="settings-label">Colorblind Mode</label>
                 </div>
 
-                <div class="settings-row">
+                <!-- <div class="settings-row">
                     <label class="switch">
                         <input type="checkbox" id="development-mode-checkbox">
                         <span class="slider round"></span>
                     </label>
                     <label for="development-mode-checkbox" class="settings-label">Development Mode</label>
-                </div>
+                </div> -->
 
 
 

@@ -10,7 +10,7 @@ const finishTimeCheckbox = document.getElementById('finish-time-checkbox');
 
 let gameActive = false;
 let gameWon = false;
-let developmentModeActive = false;
+let developmentModeActive = true;
 // finishTimeDisplay.style.visibility = 'hidden';
 
 const colors = ["red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan",
@@ -21,7 +21,10 @@ let firstPanel = null;
 let secondPanel = null;
 let score = 0;
 
-
+// TODO 
+// FIXME 
+// REVIEW 
+// IDEA 
 
 // Timer Functions //
 
@@ -29,7 +32,7 @@ let score = 0;
 let timerInterval;
 let elapsedTime = 0;
 let timerRunning = false;
-timerDisplay.style.visibility = 'hidden';
+timerDisplay.style.visibility = 'visible';
 
 function formatTime(seconds) { // Formats the time from seconds to HH:MM:SS
     const hrs = Math.floor(seconds / 36000);
@@ -62,7 +65,7 @@ function resetTimer() { // Resets the timer to 00:00:00
 
 function updateFinalResult(finalTime) { // Updates the timer display with the final result when the game is won
     console.log('Updating final result:', finalTime); // Debug log
-    timerDisplay.innerHTML = `<p>Finish time: <span class="final-time">${formatTime(finalTime)}</span></p>`;
+    timerDisplay.innerHTML = `<p>Finishing time: <br><span class="final-time">${formatTime(finalTime)}</span></p>`;
 } 
 
 
@@ -212,20 +215,20 @@ startStopButton.addEventListener('click', resetGame);
 
 timerCheckbox.addEventListener('change', (e) => { 
     if (e.target.checked) {
-        timerDisplay.style.visibility = 'visible';
+        timerDisplay.style.visibility = 'hidden';
     } else {
-        timerDisplay.style.visibility  = 'hidden';
+        timerDisplay.style.visibility  = 'visible';
     }
 }); // Event listener for timer checkbox to toggle timer visibility
 
-developmentModeCheckbox.addEventListener('change', (e) => {
-    if (e.target.checked) {
-        developmentModeActive = true;
-    } else {
-        developmentModeActive = false;
-    }
-    resetGame();
-}); // Event listener for development mode checkbox to toggle development mode
+// developmentModeCheckbox.addEventListener('change', (e) => {
+//     if (e.target.checked) {
+//         developmentModeActive = true;
+//     } else {
+//         developmentModeActive = false;
+//     }
+//     resetGame();
+// }); // Event listener for development mode checkbox to toggle development mode
 
 
 

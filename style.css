@@ -11,10 +11,12 @@ body {
 
 .container {
     background: #fff;
-    padding: 20px 5px 5px 5px;
+    padding: 0px 0px 0px 0px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 320px;
+    max-height: 665px; /* Ensuring the height does not exceed 665px */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -27,8 +29,36 @@ h1 {
     margin: 0;
 }
 
+p {
+    margin: 0;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 21.125px;
+}
+
+.score-area {
+    /* margin: 0 21.125px; */
+}
+
+#timer-area {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin: 0 21.125px;
+    width: 104px;
+}
+
+
 #timer-display {
-    visibility: hidden;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    /* margin-left: auto; */
+    
 }
 
 
@@ -57,13 +87,14 @@ h1 {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: 80px;
+    height: auto;
     width: 100%;
+    margin: 5px;
 }
 
 button {
     width: 70%;
-    height: 60%;
+    height: 60px;
     font-size: large;
     border-radius: 8px;
 }
