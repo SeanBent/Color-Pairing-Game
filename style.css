@@ -1,5 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: "Manrope", sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -11,9 +13,9 @@ body {
 
 .container {
     background: #fff;
-    padding: 0px 0px 0px 0px;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 320px;
     max-height: 665px; /* Ensuring the height does not exceed 665px */
     overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
@@ -27,6 +29,14 @@ body {
 
 h1 {
     margin: 0;
+    font-size: 2em; /* Adjusted font size */
+    color: #333; /* Updated color */
+}
+
+h2 {
+    margin: 5px 0; /* Added margin */
+    font-size: 1.2em; /* Adjusted font size */
+    color: #3f3f3f; /* Updated color */
 }
 
 p {
@@ -38,18 +48,25 @@ p {
     flex-direction: row;
     justify-content: space-between;
     margin: 0 21.125px;
+    background: #e9e1e1;
+    border-radius: 4px; /* Added rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
 }
 
 .score-area {
     /* margin: 0 21.125px; */
+    flex: 1;
 }
 
 #timer-area {
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    margin: 0 21.125px;
+    /* margin: 0px 21.125px 0px; */
     width: 104px;
+    flex: 2;
+    padding-right: 4px;
+    padding-left: 90px;
 }
 
 
@@ -71,6 +88,7 @@ p {
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 0 auto;
+    border-radius: 4px;
 }
 
 .game-panel {
@@ -80,6 +98,13 @@ p {
     height: 65px;
     border: solid black;
     margin: 0.5px;
+    border-radius: 4px;
+    background: grey;
+    transition: background 0.2s;
+}
+
+.game-panel:hover {
+    background: #ddd; /* Added hover effect */
 }
 
 .button-area {
@@ -89,14 +114,23 @@ p {
     align-items: center;
     height: auto;
     width: 100%;
-    margin: 5px;
+    margin: 5px 0;
 }
 
 button {
-    width: 70%;
-    height: 60px;
-    font-size: large;
+    width: 60%;
+    height: 50px;
+    font-size: x-large;
     border-radius: 8px;
+    margin: 5px 0px;
+    /* background-color: #a2ee3f; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, transform 0.3s;
+}
+
+button:hover {
+    /* background-color: #1976D2; Updated hover background color */
+    transform: scale(1.05); /* Added hover transform effect */
 }
 
 

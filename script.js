@@ -10,7 +10,7 @@ const finishTimeCheckbox = document.getElementById('finish-time-checkbox');
 
 let gameActive = false;
 let gameWon = false;
-let developmentModeActive = true;
+let developmentModeActive = false;
 // finishTimeDisplay.style.visibility = 'hidden';
 
 const colors = ["red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan",
@@ -102,26 +102,26 @@ function handleMatch() { // Handles the logic when a mismatch is found
     scoreCounter.innerText = score;
     if (checkWin()) {
         console.log('Win detected'); // Debug log
-        instructions.innerText = 'You won! Click the button below to play again';
+        // instructions.innerText = 'You won! Click the button below to play again';
         startStopButton.innerText = 'Play Again';
         updateFinalResult(elapsedTime);
         stopTimer();
     }
 }
-
+//TODO adjust panel backgrounds 
 function handleMismatch() { // Handles the logic when a mismatch is found
     clickable = false; // Disable clicking
     setTimeout(() => {                          // Delay for visual feedback
         if (firstPanel !== null) {                // Check if firstPanel is selected
-            firstPanel.style.background = 'grey';   // Reset firstPanel color
+            firstPanel.style.background = '';   // Reset firstPanel color
         }
         if (secondPanel !== null) {                // Check if secondPanel is selected
-            secondPanel.style.background = 'grey';   // Reset secondPanel color
+            secondPanel.style.background = '';   // Reset secondPanel color
         }
         firstPanel = null;                         // Reset firstPanel for next selection
         secondPanel = null;                         // Reset secondPanel for next selection
         clickable = true; // Re-enable clicking
-    }, 1000);                                    // 1 second delay
+    }, 700);                                    // 1 second delay
 }
 
 function handlePanelClick(panel, color) { // Handles the click event on a panel
@@ -146,7 +146,7 @@ function handlePanelClick(panel, color) { // Handles the click event on a panel
 // Game Logic
 
 function startGame() { // Starts the game, initializes panels and timer
-    instructions.innerText = "Match color pairs until all 16 panels are revealed";
+    // instructions.innerText = "Match color pairs until all 16 panels are revealed";
     score = 0;
     scoreCounter.innerText = score;
     timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`; // Clear previous game's final time result
@@ -158,13 +158,13 @@ function startGame() { // Starts the game, initializes panels and timer
         newPanel.setAttribute('data-matched', 'false');
         let currentIndex = Math.floor(Math.random() * panelColors.length);  // Get a random index from the panelColors array
         const truePanelColor = panelColors[currentIndex];  
+        // newPanel.style.background = 'grey';
+        //TODO remove background style change if necessary
 
         if (developmentModeActive === true) {
             newPanel.textContent= truePanelColor;
             newPanel.style.color = truePanelColor;
-        } else {
-            newPanel.style.background = 'grey'; 
-        }
+        };
 
                          // Get the color corresponding to the random index
 
