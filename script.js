@@ -7,16 +7,21 @@ const timerCheckbox = document.getElementById('timer-checkbox');
 const timerDisplay = document.getElementById('timer-display');
 const developmentModeCheckbox = document.getElementById('development-mode-checkbox');
 const finishTimeCheckbox = document.getElementById('finish-time-checkbox');
+const blackAndWhiteModeCheckbox = document.getElementById('black-and-white-mode-checkbox');
 
 let gameActive = false;
 let gameWon = false;
 let developmentModeActive = false;
+let blackAndWhiteModeActive = false;
 // finishTimeDisplay.style.visibility = 'hidden';
 
 const colors = ["red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan",
     "red", "blue", "green", "orange", "purple", "pink", "yellow", "cyan"];
+const symbols = ["✔", "✖", "★", "✿", "❤", "☀", "♠", "♣", "✔", "✖", "★", "✿", "❤", "☀", "♠", "♣"];
 
 let panelColors = [...colors];
+let panelSymbols = [...symbols];
+
 let firstPanel = null;
 let secondPanel = null;
 let score = 0;
@@ -75,18 +80,13 @@ function updateFinalResult(finalTime) { // Updates the timer display with the fi
 
 let clickable = true; // Add a flag to control clicking
 
-function selectFirstPanel(panel, color) {
-    firstPanel = panel;
-    panel.style.background = color;
-}
-
-function selectSecondPanel(panel, color) {
-    secondPanel = panel;
-    panel.style.background = color;
-}
 
 function checkMatch() {  //returns true or false if panel colors match
-    return firstPanel.style.background === secondPanel.style.background;
+    if (blackAndWhiteModeActive) {
+        return firstPanel.innerHTML === secondPanel.innerHTML;
+    } else {
+        return firstPanel.style.background === secondPanel.style.background;
+    }
 }
 
 function checkWin() { // Checks if the game is won (all pairs found) 
@@ -108,14 +108,20 @@ function handleMatch() { // Handles the logic when a mismatch is found
         stopTimer();
     }
 }
-//TODO adjust panel backgrounds 
+
 function handleMismatch() { // Handles the logic when a mismatch is found
     clickable = false; // Disable clicking
     setTimeout(() => {                          // Delay for visual feedback
         if (firstPanel !== null) {                // Check if firstPanel is selected
+            if (blackAndWhiteModeActive) {
+                firstPanel.innerHTML = '';
+            }
             firstPanel.style.background = '';   // Reset firstPanel color
         }
-        if (secondPanel !== null) {                // Check if secondPanel is selected
+        if (secondPanel !== null) {   // Check if secondPanel is selected
+            if (blackAndWhiteModeActive) {
+                secondPanel.innerHTML = '';
+            }
             secondPanel.style.background = '';   // Reset secondPanel color
         }
         firstPanel = null;                         // Reset firstPanel for next selection
@@ -124,14 +130,37 @@ function handleMismatch() { // Handles the logic when a mismatch is found
     }, 700);                                    // 1 second delay
 }
 
-function handlePanelClick(panel, color) { // Handles the click event on a panel
+function selectFirstPanel(panel, color, symbol) {
+    firstPanel = panel;
+
+    if (blackAndWhiteModeActive) {
+        panel.style.background = 'white';
+        panel.style.innerText = symbol;
+    } else {
+        panel.style.background = color;
+    }
+}
+
+function selectSecondPanel(panel, color, symbol) {
+    secondPanel = panel;
+    
+    if (blackAndWhiteModeActive) {
+        panel.style.background = 'white';
+        panel.style.innerText = symbol;
+    } else {
+        panel.style.background = color;
+    }
+}
+
+
+function handlePanelClick(panel, color, symbol) { // Handles the click event on a panel
     if (!clickable) return; // Ignore clicks if not clickable
     if (panel.getAttribute('data-matched') === 'true') return; // Ignore clicks if panel is already matched
 
     if (firstPanel === null) {                 // If no panel has been selected yet, select the current panel as the first panel.
-        selectFirstPanel(panel, color);
+        selectFirstPanel(panel, color, symbol);
     } else if (secondPanel === null && panel !== firstPanel) {   // If one panel is selected and the current panel is different from the first panel, select the current panel as the second panel.
-        selectSecondPanel(panel, color);
+        selectSecondPanel(panel, color, symbol);
 
         if (checkMatch()) {                     // Check if the colors of the two selected panels match.
             handleMatch();                      // If they match, handle a successful match.
@@ -146,71 +175,92 @@ function handlePanelClick(panel, color) { // Handles the click event on a panel
 // Game Logic
 
 function startGame() { // Starts the game, initializes panels and timer
-    // instructions.innerText = "Match color pairs until all 16 panels are revealed";
+
+    // Initialize game state and UI
+    gameActive = true;
+    panelColors = [...colors];
+    panelSymbols = [...symbols];
     score = 0;
     scoreCounter.innerText = score;
-    timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`; // Clear previous game's final time result
+    startStopButton.innerText = 'Stop';
+    timerDisplay.innerHTML = `<p>${formatTime(elapsedTime)}</p>`; 
+    startTimer();
 
 
     for (let i = 0; i <= 15; i++) {                                         // Loop to create 16 panels
         const newPanel = document.createElement('div');                     // Create a new div element for the panel
         newPanel.className = 'game-panel';                                  // Assign the class 'game-panel' to the new div                                       
         newPanel.setAttribute('data-matched', 'false');
-        let currentIndex = Math.floor(Math.random() * panelColors.length);  // Get a random index from the panelColors array
-        const truePanelColor = panelColors[currentIndex];  
-        // newPanel.style.background = 'grey';
-        //TODO remove background style change if necessary
+
+        let currentColorIndex = Math.floor(Math.random() * panelColors.length);  // Get a random index from the panelColors array
+        const truePanelColor = panelColors[currentColorIndex];
+
+        let currentSymbolIndex = Math.floor(Math.random() * panelSymbols.length);
+        const truePanelSymbol = panelSymbols[currentSymbolIndex];
 
         if (developmentModeActive === true) {
-            newPanel.textContent= truePanelColor;
-            newPanel.style.color = truePanelColor;
+
+            if (blackAndWhiteModeActive) {
+                newPanel.textContent = truePanelSymbol;
+                newPanel.style.background= 'white';
+            } else {
+                newPanel.textContent= truePanelColor;
+                newPanel.style.color = truePanelColor;
+            }
         };
 
-                         // Get the color corresponding to the random index
+
 
         
         newPanel.addEventListener('click', () => {
-            if (clickable) { // Check if clickable before handling click
-                newPanel.style.background = truePanelColor;
-                handlePanelClick(newPanel, truePanelColor);
-            }
+            if (clickable) {
+                if (blackAndWhiteModeActive) {
+
+                    newPanel.style.background = 'white';
+                    newPanel.innerHTML = `<p>${truePanelSymbol}</p>`;
+                    handlePanelClick(newPanel, 'white', truePanelSymbol);
+                } else {
+                    newPanel.style.background = truePanelColor;
+                    handlePanelClick(newPanel, truePanelColor, 'inactive');
+                }
+            } // Check if clickable before handling click
         });
 
-        gameContainer.appendChild(newPanel);                                 // Append the new panel to the game container
-        panelColors.splice(currentIndex, 1);                                 // Remove the used color from the panelColors array
+        gameContainer.appendChild(newPanel);        
+        panelColors.splice(currentColorIndex, 1); // Remove the used color from the panelColors array
+        panelSymbols.splice(currentSymbolIndex, 1);
     }
 }
 
 function resetGame() { // Resets the game, clearing panels and resetting the timer
 
+    // Reset game state and UI
+    gameActive = false;
     score = 0;
     scoreCounter.innerText = score;
     resetTimer();
+    stopTimer();
 
-    if (gameActive) {                               // If the game is active, remove all panels when the button is clicked
-        const allPanels = Array.from(document.getElementsByClassName('game-panel'));  // Get all panels
-        for (const panel of allPanels) {
-            panel.remove();                                                           // Remove each panel
-        }
-        startStopButton.innerText = 'Start';                                          // Change the button text to 'Start'
-        gameActive = false;
-        stopTimer();
-
-        clearInterval(timerInterval);
-        // Set gameActive to false to indicate the game has stopped
-    } else {
-        panelColors = [...colors];                                                    // If the game is not active, reset the panelColors array
-        startGame();                                                                  // Start the game
-        startStopButton.innerText = 'Stop';                                           // Change the button text to 'Stop'
-        gameActive = true;
-        startTimer();                                                        // Set gameActive to true to indicate the game is now active
+    const allPanels = Array.from(document.getElementsByClassName('game-panel'));
+    for (const panel of allPanels) {
+        panel.remove();
     }
+
+    //Reset Button Text
+    startStopButton.innerText = 'Start';
+    panelColors = [...colors];
 }
 
 
 /// Event Listeners ///
 
-startStopButton.addEventListener('click', resetGame);
+startStopButton.addEventListener('click', () => {
+    if (gameActive) {
+        resetGame();
+    } else {
+        startGame();
+    }
+});
 // Event listener for start/stop button to reset the game
 
 timerCheckbox.addEventListener('change', (e) => { 
@@ -221,20 +271,16 @@ timerCheckbox.addEventListener('change', (e) => {
     }
 }); // Event listener for timer checkbox to toggle timer visibility
 
-// developmentModeCheckbox.addEventListener('change', (e) => {
-//     if (e.target.checked) {
-//         developmentModeActive = true;
-//     } else {
-//         developmentModeActive = false;
-//     }
-//     resetGame();
-// }); // Event listener for development mode checkbox to toggle development mode
-
-
-
-
-/* change log
-
-gave each function definition a comment 
-
-*/
+blackAndWhiteModeCheckbox.addEventListener('change', (e) => {
+    if (e.target.checked) {
+        blackAndWhiteModeActive = true;
+        if (gameActive == true) {
+            resetGame();
+        };
+    } else {
+        blackAndWhiteModeActive = false;
+        if (gameActive == true) {
+            resetGame();
+        };
+    }
+});

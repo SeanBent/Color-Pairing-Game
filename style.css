@@ -108,6 +108,9 @@ p {
 .game-panel {
     /* background: #c21919; */
     /* padding: 5px 5px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 65px;
     height: 65px;
     border: solid black;
@@ -115,6 +118,10 @@ p {
     border-radius: 4px;
     background: grey;
     transition: background 0.2s;
+}
+
+.game-panel p {
+    font-size: 3rem;
 }
 
 .game-panel:hover {
